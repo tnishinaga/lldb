@@ -137,6 +137,11 @@ size_t ObjectFilePECOFF::GetModuleSpecifications(
           spec.SetTriple("arm-pc-windows");
           specs.Append(ModuleSpec(file, spec));
         }
+        else if (coff_header.machine == MachineArm64)
+        {
+          spec.SetTriple("arm64-pc-windows");
+          specs.Append(ModuleSpec(file, spec));
+        }
       }
     }
   }
@@ -1021,6 +1026,7 @@ bool ObjectFilePECOFF::GetArchitecture(ArchSpec &arch) {
   case llvm::COFF::IMAGE_FILE_MACHINE_POWERPC:
   case llvm::COFF::IMAGE_FILE_MACHINE_POWERPCFP:
   case llvm::COFF::IMAGE_FILE_MACHINE_ARM:
+  case llvm::COFF::IMAGE_FILE_MACHINE_ARM64:
   case llvm::COFF::IMAGE_FILE_MACHINE_ARMNT:
   case llvm::COFF::IMAGE_FILE_MACHINE_THUMB:
     arch.SetArchitecture(eArchTypeCOFF, machine, LLDB_INVALID_CPUTYPE,
